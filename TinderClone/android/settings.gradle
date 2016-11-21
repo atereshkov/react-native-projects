@@ -1,0 +1,3 @@
+rootProject.name = 'TinderClone'
+
+include ':app'
