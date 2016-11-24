@@ -1,5 +1,5 @@
 {
-  "name": "PropertyFinder",
+  "name": "RNDrawerDemo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,7 +9,8 @@
   "dependencies": {
     "react": "15.3.2",
     "react-native": "0.37.0",
-    "react-native-drawer": "^2.3.0"
+    "react-native-drawer": "latest",
+    "react-native-slider": "^0.9.1"
   },
   "jest": {
     "preset": "jest-react-native"
