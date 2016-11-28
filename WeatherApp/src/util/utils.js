@@ -27,7 +27,7 @@ const Utils = {
     },
     getIconUrl(icon) {
         //icon .pngs placed in github io repo
-        return "http://jsphkhan.github.io/ReactNativeWeatherApp/assets/icons/" + icon + ".png";
+        return "https://raw.githubusercontent.com/handioq/react-native-projects/develop/WeatherApp/icons/" + icon + ".png";
     }
 };
 
