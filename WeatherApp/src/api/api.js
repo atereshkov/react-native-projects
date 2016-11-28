@@ -1,6 +1,6 @@
 const api = {
     baseUrl: "http://api.openweathermap.org/data/2.5/",
-    dailyForecastUrl: "forecast",
+    dailyForecastUrl: "forecast/daily",
     currentWeatherUrl: "weather",
     key: 'cb85953ec6364da78961c7c593b7f0c9', // Put Your API key here
     getDailyForecastUrl() {

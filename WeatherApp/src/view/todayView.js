@@ -11,6 +11,7 @@ var ForecastView = require('./forecastView');
 var DegreeComponent = require('../component/degreeComponent');
 var api = require('../api/api');
 var Utils = require('../util/utils');
+import StatusBar from "../component/StatusBar";
 
 class TodayView extends Component {
 
@@ -53,17 +54,6 @@ class TodayView extends Component {
         }
         return [temp, weather, dateString];
     }
-
-/*    handleForecastButtonPressed() {
-        this.setState({isLoading: false, message: ''});
-
-        this.props.navigator.push({
-            title: "10 day Forecast",
-            id: "ForecastView",
-            component: ForecastView,
-            data: this.props.data
-        });
-    }*/
 
     render() {
         var pureData = this.formatData();
@@ -118,7 +108,7 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        marginTop: 65,
+        //marginTop: 65,
         //alignItems: 'center', //flex-start, flex-end, center, stretch
         backgroundColor: '#f2f2f2'
     },
@@ -145,6 +135,10 @@ var styles = StyleSheet.create({
     },
     cityName: {
         fontSize: 25,
+        textAlign: 'left'
+    },
+    backButton: {
+        fontSize: 20,
         textAlign: 'left'
     },
     curTemp: {

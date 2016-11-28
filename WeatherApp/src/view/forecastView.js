@@ -8,11 +8,13 @@ import {
 
 var DegreeComponent = require('../component/degreeComponent');
 var Utils = require('../util/utils');
+import StatusBar from "../component/StatusBar";
 
 class ForecastView extends Component {
 
     constructor(props) {
         super(props);
+        console.log('Well, we got result: ' + this.props.data.length);
         var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.dt !== r2.dt});
         this.state = {
             dataSource: dataSource.cloneWithRows(this.props.data)
@@ -66,7 +68,13 @@ class ForecastView extends Component {
 
     render() {
         return (
-            <ListView style={styles.listContainer} dataSource={this.state.dataSource} renderRow={this.renderRow}/>
+            <View>
+                <StatusBar title="Forecast"/>
+                <ListView style={styles.listContainer}
+                          dataSource={this.state.dataSource}
+                          renderRow={this.renderRow.bind(this)}/>
+            </View>
+
         );
     }
 }

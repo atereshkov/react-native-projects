@@ -9,6 +9,7 @@ import {
 var TodayView = require('./todayView');
 var ForecastView = require('./forecastView');
 var api = require('../api/api');
+import StatusBar from "../component/StatusBar";
 
 class SearchView extends Component {
 
@@ -16,7 +17,7 @@ class SearchView extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            searchString: 'Bangalore',
+            searchString: 'San Francisco',
             message: ''
         };
     }
@@ -38,17 +39,17 @@ class SearchView extends Component {
         var url = api.getDailyForecastUrl();
         var queryStringData = {
             q: this.state.searchString,
-            type: 'accurate'
-            /*cnt: 10,*/
+            type: 'accurate',
+            cnt: 10
         };
         return this.returnPreparedUrl(url, queryStringData);
     }
 
-    fetchApiDataForForecast(query, currentWeatherData) {
+    fetchApiDataForForecast(query) {
         //make an API call to the end point for 10 day Forecast
         fetch(query)
             .then(response => response.json())
-            .then(responseData => this.handleResponseForForecast(responseData, currentWeatherData))
+            .then(responseData => this.handleResponseForForecast(responseData))
             .catch(error =>
                 this.setState({
                     isLoading: false,
@@ -56,27 +57,15 @@ class SearchView extends Component {
                 })).done();
     }
 
-    handleResponseForForecast(forecastData, currentWeatherData) {
+    handleResponseForForecast(forecastData) {
         this.setState({isLoading: false, message: ''});
         console.log('forecastData searchView: ' + forecastData.list.length);
-        //once response from both API's come, navigate to TodayView
-        this.props.navigator.push({
-            title: "Current",
-            id: "TodayView",
-            component: TodayView,
-            data: currentWeatherData,
-            city: this.state.searchString,
 
-            //navigate to Forecast View with prefetched data
-            rightButtonTitle: 'Forecast',
-            onRightButtonPress: () => {
-                this.props.navigator.push({
-                    title: "10 day Forecast",
-                    id: "ForecastView",
-                    component: ForecastView,
-                    data: forecastData.list
-                });
-            }
+        this.props.navigator.push({
+            title: "10 day Forecast",
+            id: "ForecastView",
+            component: ForecastView,
+            data: forecastData.list
         });
     }
 
@@ -104,28 +93,40 @@ class SearchView extends Component {
 
     //this.props.navigator.pop()
     handleResponseForCurrentWeather(currentWeatherData) {
-        //make API call for 10 day Forecast
         this.setState({message: 'Gathering 10 day forecast data'});
-        this.fetchApiDataForForecast(this.prepareAPIUrlForForecast(), currentWeatherData);
+        this.props.navigator.push({
+            title: "Current",
+            id: "TodayView",
+            component: TodayView,
+            data: currentWeatherData,
+            city: this.state.searchString
+        });
     }
 
     handleTextInputChange(event) {
         this.setState({searchString: event.nativeEvent.text});
     }
 
-    handleSearchButtonPressed() {
-        console.log('handleSearchButtonPressed');
+    handleCurrentButtonPressed() {
+        console.log('handleCurrentButtonPressed');
         this.setState({isLoading: true, message: 'Gathering current weather data'});
         this.fetchApiDataForCurrentWeather(this.prepareAPIUrlForCurrentWeather());
+    }
+
+    handleForecastButtonPressed() {
+        console.log('handleForecastButtonPressed');
+        this.setState({isLoading: true, message: 'Gathering current weather data'});
+        this.fetchApiDataForForecast(this.prepareAPIUrlForForecast());
     }
 
     render() {
         var spinner = this.state.isLoading ? ( <ActivityIndicator size='large'/> ) : ( <View/>);
         return (
             <View style={styles.searchContainer}>
-                {/*<Image
+                <StatusBar title="Search"/>
+                <Image
                     style={styles.image}
-                    source={require('image!background')}>*/}
+                    source={{uri: 'http://savepic.ru/12413285.jpg'}} >
                     <View style={styles.innerContainer}>
                         <Text style={styles.text}>Get your Weather dose!</Text>
 
@@ -137,13 +138,18 @@ class SearchView extends Component {
 
                         <TouchableHighlight style={styles.button}
                                             underlayColor="#5CBC85"
-                                            onPress={this.handleSearchButtonPressed.bind(this)}>
-                            <Text style={styles.buttonText}>Get current Weather</Text>
+                                            onPress={this.handleCurrentButtonPressed.bind(this)}>
+                            <Text style={styles.buttonText}>Get Current Weather</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={styles.button}
+                                            underlayColor="#5CBC85"
+                                            onPress={this.handleForecastButtonPressed.bind(this)}>
+                            <Text style={styles.buttonText}>Get Forecast Weather</Text>
                         </TouchableHighlight>
                         {spinner}
-                        <Text>{this.state.message}</Text>
+                        <Text style={styles.messageText}>{this.state.message}</Text>
                     </View>
-                {/*</Image>*/}
+                </Image>
             </View>
         );
     }
@@ -156,12 +162,13 @@ const styles = StyleSheet.create({
     searchContainer: {
         flex: 1,
         //justifyContent: 'flex-start',
-        marginTop: 65,
+        //marginTop: 65,
         alignItems: 'stretch',
         backgroundColor: 'transparent',
     },
     innerContainer: {
         alignItems: 'center',
+        marginTop: 55,
         justifyContent: 'flex-start',
         //resizeMode: Image.resizeMode.cover,
         flexDirection:'column',
@@ -171,6 +178,10 @@ const styles = StyleSheet.create({
         marginTop: 80,
         fontSize: 28,
         textAlign: 'center',
+        color: 'white',
+        backgroundColor: 'transparent'
+    },
+    messageText: {
         color: 'white',
         backgroundColor: 'transparent'
     },
@@ -184,7 +195,8 @@ const styles = StyleSheet.create({
         borderColor: '#0ea378',
         backgroundColor: 'white',
         borderRadius: 3,
-        color: '#48BBEC'
+        color: '#48BBEC',
+        alignSelf: 'stretch'
     },
     button: {
         height: 36,
