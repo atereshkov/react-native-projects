@@ -11,7 +11,7 @@
 ### OpenWeatherMap.org instruction
 
 * First, sign in or sign up.
-* Create new API key [from this page].(https://home.openweathermap.org/api_keys)
+* Create new API key [from this page](https://home.openweathermap.org/api_keys).
 * Put your API key in ../api/api.js
 
 ### [Running it](https://github.com/handioq/react-native-projects#running-it)
