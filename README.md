@@ -45,6 +45,11 @@ Now that you have successfully run the app, let's modify it.
 * Open index.android.js in your text editor of choice and edit some lines.
 * Press the R key twice or select Reload from the Developer Menu to see your change!
 
+### Useful links and libraries
+
+* [React Native Router](https://github.com/aksonov/react-native-router-flux) - navigation between scenes.
+* [React-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) - Multi-language support (localization and internationalization)
+
 ### Questions / Problems?
 
-* Try to find some information from [Facebook getting started guide](https://facebook.github.io/react-native/docs/getting-started.html).
+Try to find some information from [Facebook getting started guide](https://facebook.github.io/react-native/docs/getting-started.html).
