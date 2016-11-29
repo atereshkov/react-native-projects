@@ -1,0 +1,27 @@
+{
+  "name": "RouterFlux",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+	"sync-rnrf": "rm -rf ./node_modules/react-native-router-flux; sane '/usr/bin/rsync -v -a --exclude .git --exclude Example --exclude node_modules ../ ./node_modules/react-native-router-flux/' .. --glob='{**/*.json,**/*.js}'",
+    "test": "jest"
+  },
+  "dependencies": {
+  "clamp": "^1.0.1",
+    "react": "15.4.1",
+	"react-native-button": "github:ide/react-native-button",
+    "react-native-drawer": "^2.2.2",
+    "react-native": "0.38.0",
+    "react-native-router-flux": "^3.37.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  }
+}
